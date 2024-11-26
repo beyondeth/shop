@@ -10,3 +10,6 @@
    eleton textarea toast tooltip
 
 1:22:48
+3:57:00 front
+5:14:21 cart / tanstack query
+5:33:30

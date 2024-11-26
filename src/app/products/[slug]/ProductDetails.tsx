@@ -1,5 +1,7 @@
 "use client";
 
+import AddToCartButton from "@/components/AddToCartButton";
+
 import {
   Accordion,
   AccordionContent,
@@ -16,6 +18,8 @@ import { useState } from "react";
 import ProductMedia from "./ProductMedia";
 import ProductOptions from "./ProductOptions";
 import ProductPrice from "./ProductPrice";
+import BuyNowButton from "@/components/BuyNowButton";
+import BackInStockNotificationButton from "@/components/BackInStockNotificationButton";
 
 interface ProductDetailsProps {
   product: products.Product;
@@ -99,6 +103,29 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
               )}
           </div>
         </div>
+        {inStock ? (
+          <div className="flex items-center gap-2.5">
+            <AddToCartButton
+              product={product}
+              selectedOptions={selectedOptions}
+              quantity={quantity}
+              disabled={availableQuantityExceeded || quantity < 1}
+              className="w-full"
+            />
+            <BuyNowButton
+              product={product}
+              selectedOptions={selectedOptions}
+              quantity={quantity}
+              disabled={availableQuantityExceeded || quantity < 1}
+            />
+          </div>
+        ) : (
+          <BackInStockNotificationButton
+            product={product}
+            selectedOptions={selectedOptions}
+            className="w-full"
+          />
+        )}
         {!!product.additionalInfoSections?.length && (
           <div className="space-y-1.5 text-sm text-muted-foreground">
             <span className="flex items-center gap-2">

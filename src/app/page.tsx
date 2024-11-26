@@ -2,7 +2,7 @@ import banner from "@/assets/banner.jpg";
 import Product from "@/components/Product";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { delay } from "@/lib/utils";
+import { getWixServerClient } from "@/lib/wix-client.server";
 
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
@@ -46,15 +46,15 @@ export default function Home() {
 }
 
 async function FeaturedProducts() {
-  await delay(1000);
+  const wixClient = await getWixServerClient();
 
-  const collection = await getCollectionBySlug("featured-products");
+  const collection = await getCollectionBySlug(wixClient, "featured-products");
 
   if (!collection?._id) {
     return null;
   }
 
-  const featuredProducts = await queryProducts({
+  const featuredProducts = await queryProducts(wixClient, {
     collectionIds: collection._id,
   });
 
